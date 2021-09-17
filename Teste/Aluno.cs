@@ -10,7 +10,6 @@ namespace Teste
     /*Classe do aluno e seus atributos*/
     public class Aluno
     {
-        string nulo = string.Empty;
         string nome;
         double p1;
         double p2;
@@ -44,42 +43,61 @@ namespace Teste
         /*Função Principal*/
         public static void Main(string[] args)
         {
-            Console.Clear();
 
+        /*Se o usuario não inserir os dados do campo aluno, voltar para o inicio*/
         inicio:
+
+            Console.Clear();
 
             var n = new Aluno();
             Console.WriteLine("\nDigite o nome do aluno: ");
             n.nome = Console.ReadLine();
+            Type t = n.nome.GetType();
+            if (string.IsNullOrWhiteSpace(n.nome) || n.nome.Equals(typeof(double)))
+            {
+                Console.WriteLine("Digite um nome válido para o aluno da próxima vez!");
+                Console.ReadKey();
+                goto inicio;
+            }
+
             Console.WriteLine("\nDigite a primeira nota do aluno: ");
             n.p1 = Double.Parse(Console.ReadLine());
+            Console.WriteLine(n.p1.GetType());
+            Type t2 = n.p1.GetType();
+            if (double.IsNaN(n.p1) || double.IsNegative(n.p1) || n.nome.Equals(typeof(string)))
+            {
+                Console.WriteLine("\nDigite um valor válido para a nota da próxima vez!");
+                Console.ReadKey();
+                goto inicio;
+            }
+
             Console.WriteLine("\nDigite a segunda nota do aluno: ");
             n.p2 = Double.Parse(Console.ReadLine());
-            double resultado = n.Calcula_Media(n.p1, n.p2);
-
-            /*Se o usuario não incerir os dados do campo aluno, voltar para o inicio*/
-            Console.WriteLine("\nO nome do aluno é: "+n.nome);
-            if (n.nome == n.nulo)
+            if (double.IsNaN(n.p2) || double.IsNegative(n.p2))
             {
-                Console.WriteLine("Digite um nome válido para o aluno!");
-                Console.Clear();
+                Console.WriteLine("\nDigite um valor válido para a nota da próxima vez!");
                 goto inicio;
-
             }
-            /*---------------------------------------------------------------------*/
+
+            double resultado = n.Calcula_Media(n.p1, n.p2);
+            bool resultado_2 = n.Verifica_Passou();
+            /*-------------------------------------------------------------------*/
+           
 
             
             Console.WriteLine("\nA média de notas do aluno é: " +resultado);
-            if(n.passou == true)
+            switch (resultado_2)
             {
-                Console.WriteLine("O aluno foi aprovado");
-            }
-            else
-            {
-                Console.WriteLine("O aluno foi reprovado");
+                case true:
+                    Console.WriteLine("O aluno foi aprovado");
+                    break;
+
+                case false:
+                    Console.WriteLine("O aluno foi reprovado");
+                    break;
             }
 
-            /*Quero utilizar os valores de retorno de "passou e "media" para mostrar na tela */
+            Console.ReadKey();
 
 
         }
