@@ -21,33 +21,53 @@ namespace Teste
 
             var n = new Aluno();
             var m = new Media();
+
             Aluno.Campo_1();
             n.nome = Console.ReadLine();
             Type t = n.nome.GetType();
-            if (string.IsNullOrWhiteSpace(n.nome) || n.nome.Equals(typeof(double)))
+
+
+            switch (n.nome)
             {
-                Aluno.Campo_Erro_1();
-                Console.ReadKey();
-                goto inicio;
+                case "":
+                    Aluno.Campo_Erro_1();
+                    Console.ReadKey();
+                    goto inicio;
+                case null:
+                    Aluno.Campo_Erro_1();
+                    Console.ReadKey();
+                    goto inicio;
+                case String.Parse(double):
+                    Console.ReadKey();
+                    goto inicio;
             }
+
 
             Aluno.Campo_2();
             n.p1 = Double.Parse(Console.ReadLine());
             Type t2 = n.p1.GetType();
-            if (double.IsNaN(n.p1) || double.IsNegative(n.p1) || n.nome.Equals(typeof(string)))
-            {
-                Aluno.Campo_Erro_2();
-                Console.ReadKey();
-                goto inicio;
-            }
+
 
             Aluno.Campo_3();
             n.p2 = Double.Parse(Console.ReadLine());
-            if (double.IsNaN(n.p2) || double.IsNegative(n.p2))
+            /*(double.IsNaN(n.p2) || double.IsNegative(n.p2))*/
+
+            
+            switch (n.p1)
             {
-                Aluno.Campo_Erro_2();
-                goto inicio;
+                case double.NaN:
+                    Aluno.Campo_Erro_2();
+                    Console.ReadKey();
+                    goto inicio;
             }
+            switch (n.p2)
+            {
+                case double.NaN:
+                    Aluno.Campo_Erro_2();
+                    Console.ReadKey();
+                    goto inicio;
+            }
+            
 
             /*Criado objetos chamando os atributos das classes "Aluno" e "Media" */
             double resultado = m.Calcula_Media(n.p1, n.p2);
