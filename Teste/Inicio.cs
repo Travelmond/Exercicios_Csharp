@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MiNET.Plugins;
 
 namespace Teste
 {
@@ -22,52 +23,79 @@ namespace Teste
             var n = new Aluno();
             var m = new Media();
 
-            Aluno.Campo_1();
-            n.nome = Console.ReadLine();
-            Type t = n.nome.GetType();
-
-
-            switch (n.nome)
+            /*Estrutura de Loop+Condicional que valida o que foi escrito no campo Aluno*/
+            while (string.IsNullOrWhiteSpace(n.nome))
             {
-                case "":
-                    Aluno.Campo_Erro_1();
-                    Console.ReadKey();
-                    goto inicio;
-                case null:
-                    Aluno.Campo_Erro_1();
-                    Console.ReadKey();
-                    goto inicio;
-                case String.Parse(double):
-                    Console.ReadKey();
-                    goto inicio;
+                Aluno.Campo_1();
+                n.nome = Console.ReadLine();
+               
+                break;
             }
 
-
-            Aluno.Campo_2();
-            n.p1 = Double.Parse(Console.ReadLine());
-            Type t2 = n.p1.GetType();
-
-
-            Aluno.Campo_3();
-            n.p2 = Double.Parse(Console.ReadLine());
-            /*(double.IsNaN(n.p2) || double.IsNegative(n.p2))*/
-
-            
-            switch (n.p1)
+            if (string.IsNullOrEmpty(n.nome))
             {
-                case double.NaN:
-                    Aluno.Campo_Erro_2();
-                    Console.ReadKey();
-                    goto inicio;
+                Console.Clear();
+                Aluno.Campo_Erro_1();
+                Console.ReadKey();
+                goto inicio;
             }
-            switch (n.p2)
+            /*---------------------------------------------------------------------------*/
+
+            /*Estrutura de Try+Catch que valida o que foi escrito no campo Nota_Aluno_1*/
+
+            try
             {
-                case double.NaN:
-                    Aluno.Campo_Erro_2();
-                    Console.ReadKey();
-                    goto inicio;
+                Aluno.Campo_2();
+                n.p1 = Double.Parse(Console.ReadLine());
             }
-            
+            catch (ArgumentException)
+            {
+                Console.Clear();
+                Aluno.Campo_Erro_2();
+                Console.ReadKey();
+                goto inicio;
+            }
+            catch (Exception e)
+            {
+                Console.Clear();
+                Aluno.Campo_Erro_2();
+                Console.ReadKey();
+                goto inicio;
+            }
+
+            /*while (Double.Parse(Console .ReadLine()))
+            {
+                Console.Clear();
+                Aluno.Campo_Erro_2();
+                Console.ReadKey();
+                goto inicio;
+            }
+            */
+            /*---------------------------------------------------------------------------------*/
+
+            /*Estrutura de Try+Catch que valida o que foi escrito no campo Nota_Aluno_2*/
+            try
+            {
+                Aluno.Campo_3();
+                n.p2 = Double.Parse(Console.ReadLine());
+            }
+            catch (ArgumentException)
+            {
+                Console.Clear();
+                Aluno.Campo_Erro_2();
+                Console.ReadKey();
+                goto inicio;
+            }
+            catch (Exception e)
+            {
+                Console.Clear();
+                Aluno.Campo_Erro_2();
+                Console.ReadKey();
+                goto inicio;
+            }
+            /*----------------------------------------------------------------------------------*/
+
+
 
             /*Criado objetos chamando os atributos das classes "Aluno" e "Media" */
             double resultado = m.Calcula_Media(n.p1, n.p2);

@@ -25,7 +25,7 @@ namespace Teste
         public bool Verifica_Passou()
         {
 
-            if (media > 7)
+            if (media >= 7)
             {
                 passou = true;
             }
